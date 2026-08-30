@@ -1,0 +1,37 @@
+name: Deploy EdgeEver (no Dashboard)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * *"  # 每天 03:17 UTC
+
+permissions:
+  contents: read
+
+concurrency:
+  group: edgeever-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      EDGE_EVER_PASSWORD: ${{ secrets.EDGE_EVER_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 1
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      - name: Deploy EdgeEver
+        run: |
+          # deploy:manual = doctor → build:cloudflare → deploy:ci
+          bun run deploy:manual
