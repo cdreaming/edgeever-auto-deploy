@@ -1,14 +1,3 @@
-# EdgeEver 免 Dashboard 完全自动化部署 Fork
-
-> **本仓库与原仓库 `cdreaming/edgeever` 的区别**：
-> - 原仓库：通过 **Cloudflare Dashboard Git 集成** 部署（需手动在 Dashboard 连接 Git 仓库并设置构建/部署命令）。
->   更新机制：上游推送 → 自动触发 Cloudflare Workers Builds 自动构建。
-> - 本仓库：**完全免 Dashboard**，使用 GitHub Actions 直接调用 wrangler 部署（API Token 驱动）。
->   更新机制：上游推送 → 本仓库触发 wrangler deploy → 线上更新。
->
-> 两者功能等效，均可实现自动同步上游更新；本仓库适用于希望完全通过 CLI/CI 完成部署、避免 Dashboard 操作的场景。
-
----
 <h1><img src="assets/brand/edgeever-icon.svg" alt="EdgeEver logo" width="40" align="absmiddle" /> EdgeEver</h1>
 
 [![GitHub Stars](https://img.shields.io/github/stars/tianma-if/edgeever?style=social)](https://github.com/tianma-if/edgeever/stargazers)
